@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Notes manager</title>
+</head>
+<body>
+<style>
+
+ td {
+        width: 150px;
+        text-align: center;
+        border: 1px solid black;
+        padding: 5px;
+      }
+</style>
+<h1>Note has been successfully deleted</h1>
+<table>
+  <thead>
+    <tr>
+        <th>Note id</th>
+        <th>Note title</th>
+        <th>Content</th>
+        <th>Creation date </th>
+        <th>Modification date </th>
+        <th>      <a href=/ >
+        <button type="submit" name="back" value="Get back">Get back</button>
+                </a></th>
+    </tr>
+    </thead>
+    <tbody>
+     {% for row in data %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                <td><form action="./update" method='post'>
+                    <button type="submit" name="update" value={{row[0]}}>Update</button>
+                </form>
+                </td>
+                <td><form action="./delete" method='post'>
+                    <button type="submit" name="delete" value={{row[0]}}>Delete</button>
+                </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

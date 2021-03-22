@@ -1,0 +1,25 @@
+
+<html>
+
+    <body>
+        <h1>Add your note</h1>
+        <form action="{{ url_for('addtodb') }}" method = "POST">
+            <label for="title">Title of your note: </label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="content">Note contents: </label><br>
+            <input type="text" id="content" name="content"><br>
+            <label for="added">Created: </label><br>
+            <input type="text" id="added" name="added" readonly><br>
+            <input type="submit" value="Send">
+          </form>
+            <a href=results> <button class=grey style="height:75px;width:150px">results</button></a>
+            <script>
+              let date = new Date();
+              let year = date.getFullYear();
+              let month = date.getMonth()+1;
+              let day = date.getDate();
+              let fullDate = day + "." + month + "." + year;
+              document.getElementById("added").value = fullDate
+          </script>
+    </body>
+</html>

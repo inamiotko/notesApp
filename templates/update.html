@@ -1,0 +1,24 @@
+
+<html>
+    <body>
+        <h1>Update note number {{id}} </h1>
+   <form action="/edit" method = "POST">
+            <label for="title">Title of your note: </label><br>
+            <input type="text" id="title" name="titleN" value={{title}} ><br>
+            <label for="content">Note contents: </label><br>
+            <input type="text" id="content" name="contentN" value={{content}}><br>
+            <label for="modified">Modified: </label><br>
+            <input type="text" id="modified" name="modifiedN" readonly><br>
+       <button type="submit" name="idN" value={{id}}> Send</button>
+          </form>
+            <a href=results> <button class=grey>results</button></a>
+            <script>
+              let date = new Date();
+              let year = date.getFullYear();
+              let month = date.getMonth()+1;
+              let day = date.getDate();
+              let fullDate = day + "." + month + "." + year;
+              document.getElementById("modified").value= fullDate
+          </script>
+    </body>
+</html>
