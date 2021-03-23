@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>Notes manager</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <title>Notes manager</title>
 </head>
 <body>
-<style>
- 
- td {
-        width: 150px;
-        text-align: center;
-        border: 1px solid black;
-        padding: 5px;
-      }
-</style>
-<table>
-  <thead>
+<div class="container">
+<div class="table-responsive-sm">
+<table class="table table-bordered">
+    <thead class="thead-dark">
     <tr>
         <th>Note id</th>
         <th>Note title</th>
         <th>Creation date </th>
+        <th></th>
+        <th></th>
         <th>      <a href=/ >
-        <button type="submit" name="back" value="Get back">Get back</button>
+        <button type="submit" name="back" class="btn btn-dark" value="Get back">Get back</button>
                 </a></th>
     </tr>
     </thead>    
@@ -32,21 +28,21 @@
                 <td>{{row[2]}}</td>
                 <td><form action="./update" method='post'>
                     <input type="hidden" name="title" value={{row[1]}} />
-                    <input type="hidden" name="content" value={{row[2]}} />
-                    <input type="hidden" name="modified" value={{row[4]}} />
-                    <button type="submit" name="id" value={{row[0]}}>Update</button>
+                    <button type="submit" name="id" class="btn btn-light" value={{row[0]}}>Update</button>
                 </form>
                 </td>
                 <td><form action="./delete" method='post'>
-                    <button type="submit" name="delete" value={{row[0]}}>Delete</button>
+                    <button type="submit" name="delete" class="btn btn-light" value={{row[0]}}>Delete</button>
                 </form>
                     <td><form action="./details" method='post'>
-                    <button type="submit" name="details" value={{row[0]}}>Details</button>
+                    <button type="submit" name="details"  class="btn btn-light"value={{row[0]}}>Details</button>
                 </form>
                 </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
+</div>
+</div>
 </body>
 </html>

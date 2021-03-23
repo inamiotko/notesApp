@@ -1,17 +1,31 @@
 
 <html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Note manager</title>
+</head>
     <body>
+        <div class="container ">
         <h1>Update note number {{id}} </h1>
-   <form action="/edit" method = "POST">
+   <form action="/edit" method = "POST" class="was-validated">
+       <div class="form-group">
             <label for="title">Title of your note: </label><br>
-            <input type="text" id="title" name="titleN" value={{title}} ><br>
+            <input type="text" id="title" name="titleN" value={{title}} placeholder="Enter title" required><br>
+           <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
             <label for="content">Note contents: </label><br>
-            <input type="text" id="content" name="contentN" value={{content}}><br>
+            <input type="text" id="content" name="contentN" value={{content}} placeholder="Enter note contents" required><br>
+           <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
             <label for="modified">Modified: </label><br>
             <input type="text" id="modified" name="modifiedN" readonly><br>
-       <button type="submit" name="idN" value={{id}}> Send</button>
+           </div>
+       <button type="submit" name="idN" value={{id}} class="btn btn-dark"> Update</button>
+
           </form>
-            <a href=results> <button class=grey>results</button></a>
+            <a href=results> <button class="btn btn-dark">Show results</button></a>
+        </div>
+
             <script>
               let date = new Date();
               let year = date.getFullYear();

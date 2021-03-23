@@ -1,18 +1,29 @@
 
 <html>
-
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <title>Note manager</title>
+</head>
     <body>
+    <div class="container ">
         <h1>Add your note</h1>
-        <form action="{{ url_for('addtodb') }}" method = "POST">
+        <form action="{{ url_for('addtodb') }}" method = "POST" class="was-validated">
+                <div class="form-group">
             <label for="title">Title of your note: </label><br>
-            <input type="text" id="title" name="title"><br>
+            <input type="text" id="title" name="title" placeholder="Enter title"  required><br>
+                    <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
             <label for="content">Note contents: </label><br>
-            <input type="text" id="content" name="content"><br>
+            <input type="text" id="content" name="content" placeholder="Enter note contents" required><br>
+                    <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
             <label for="added">Created: </label><br>
             <input type="text" id="added" name="added" readonly><br>
-            <input type="submit" value="Send">
+                    </div>
+            <input type="submit" value="Create" class="btn btn-dark">
+
           </form>
-            <a href=results> <button class=grey style="height:75px;width:150px">results</button></a>
+<a href=results> <button class="btn btn-dark">Show results</button></a>
             <script>
               let date = new Date();
               let year = date.getFullYear();
@@ -21,5 +32,6 @@
               let fullDate = day + "." + month + "." + year;
               document.getElementById("added").value = fullDate
           </script>
+            </div>
     </body>
 </html>
