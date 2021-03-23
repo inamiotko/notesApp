@@ -5,7 +5,7 @@
     <title>Note manager</title>
 </head>
     <body>
-        <div class="container ">
+        <div class="container">
         <h1>Update note number {{id}} </h1>
    <form action="/edit" method = "POST" class="was-validated">
        <div class="form-group">
@@ -14,7 +14,7 @@
            <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
             <label for="content">Note contents: </label><br>
-            <input type="text" id="content" name="contentN" value={{content}} placeholder="Enter note contents" required><br>
+            <textarea id="content" name="contentN" value={{content}} placeholder="Enter note contents" required></textarea><br>
            <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
             <label for="modified">Modified: </label><br>

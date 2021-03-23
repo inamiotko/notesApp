@@ -2,20 +2,28 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-     <title>Notes manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.js"></script>
+    <script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <title>Notes manager</title>
 </head>
 <body>
 <div class="container">
 <div class="table-responsive-sm">
-<table class="table table-bordered">
+<table class="table table-bordered sortable">
     <thead class="thead-dark">
     <tr>
         <th>Note id</th>
         <th>Note title</th>
-        <th>Creation date </th>
-        <th></th>
-        <th></th>
-        <th>      <a href=/ >
+        <th >Creation date </th>
+        <th data-defaultsort='disabled'></th>
+        <th data-defaultsort='disabled'></th>
+        <th data-defaultsort='disabled'><a href=/ >
         <button type="submit" name="back" class="btn btn-dark" value="Get back">Get back</button>
                 </a></th>
     </tr>
@@ -24,7 +32,12 @@
      {% for row in data %}
             <tr>
                 <td>{{row[0]}}</td>
-                <td>{{row[1]}}</td>
+                <td style="word-break: break-all">
+                    <form action="./readonly" method='post'>
+                        <button type="submit" class="btn btn-link" name="titleRead" value={{row[1]}} >{{row[1]}} </button>
+                        <input type=hidden  name="idRead" value={{row[0]}} />
+                    </form>
+                    </td>
                 <td>{{row[2]}}</td>
                 <td><form action="./update" method='post'>
                     <input type="hidden" name="title" value={{row[1]}} />
@@ -33,11 +46,12 @@
                 </td>
                 <td><form action="./delete" method='post'>
                     <button type="submit" name="delete" class="btn btn-light" value={{row[0]}}>Delete</button>
-                </form>
+                </form></td>
                     <td><form action="./details" method='post'>
-                    <button type="submit" name="details"  class="btn btn-light"value={{row[0]}}>Details</button>
+                    <button type="submit" name="details" class="btn btn-light" value={{row[0]}}>Details</button>
                 </form>
                 </td>
+
             </tr>
         {% endfor %}
     </tbody>

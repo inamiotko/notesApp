@@ -4,8 +4,6 @@ import sqlite3 as sql
 app = Flask(__name__)
 
 occurrences = []
-
-
 @app.route('/')
 def home():
     try:
@@ -39,7 +37,7 @@ def addtodb():
             conn.execute(
                 "INSERT INTO items (deleted, edited, title,content, added, modified, note_id) SELECT ?,?,?,?,?,?, "
                 "id FROM notes WHERE id=id AND NOT EXISTS (SELECT 1 FROM items WHERE (items.title = notes.title AND "
-                "items.note_id=notes.id))", (0, 0, title, content, created, created))
+                "items.note_id=notes.id))",(0, 0, title, content, created, created))
             conn.commit()
             print("Note added")
 
@@ -72,7 +70,7 @@ def update():
             id_up = request.form['id']
             title_up = request.form['title']
             cur.execute("SELECT content FROM items WHERE (note_id=? AND title=?)", (id_up, title_up))
-            content_up = cur.fetchall()
+            content_up= cur.fetchall()
             content = content_up.pop()
             content = content[0]
 
@@ -126,12 +124,30 @@ def details():
         conn = sql.connect('database.db')
         cur = conn.cursor()
         id_show = request.form['details']
-        cur.execute("SELECT * FROM items WHERE note_id=? ORDER BY edited ASC", id_show)
+        print(id_show)
+        cur.execute("SELECT * FROM items WHERE note_id=? ORDER BY edited ASC", (id_show,))
         conn.commit()
         data_aft = cur.fetchall()
     except sql.Error as error:
         print("Failed to query details ", error)
     return render_template('details.html', data=data_aft)
+
+
+@app.route('/readonly', methods=['POST', 'GET'])
+def readonly():
+    try:
+        conn = sql.connect('database.db')
+        cur = conn.cursor()
+        title_read = request.form['titleRead']
+        id_read = request.form['idRead']
+        cur.execute("SELECT content FROM items WHERE (note_id=? AND title=?)", (id_read, title_read))
+        conn.commit()
+        content_read = cur.fetchall()
+        content = content_read.pop()
+        content = content[0]
+    except sql.Error as error:
+        print("Failed to query details ", error)
+    return render_template('readonly.html', content=content,  title=title_read)
 
 
 if __name__ == '__main__':

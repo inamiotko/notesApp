@@ -2,13 +2,19 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-     <title>Notes manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.js"></script>
+    <script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <title>Notes manager</title>
 </head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
 <div class="container">
-<div class="table-responsive-sm">
-<table class="table table-bordered">
+<table class="table table-bordered sortable">
     <thead class="thead-dark">
     <tr>
         <th>Note id</th>
@@ -17,8 +23,8 @@
         <th>Modification date</th>
         <th>Note contents</th>
         <th>Note version</th>
-        <th>      <a href=/ >
-        <button type="submit" name="back" class="btn btn-dark" value="Get back">Get back</button>
+        <th data-defaultsort='disabled'><a href=/ >
+        <button type="submit" name="back" class="btn btn-dark float-right" value="Get back">Get back</button>
                 </a></th>
     </tr>
     </thead>
@@ -26,30 +32,16 @@
      {% for row in data %}
             <tr>
                 <td>{{row[1]}}</td>
-                <td>{{row[2]}}</td>
-                <td>{{row[3]}}</td>
-                <td>{{row[4]}}</td>
-                <td>{{row[5]}}</td>
-                <td>{{row[7]}}</td>
-<!--                <td><form action="./update" method='post'>-->
-<!--                    <input type="hidden" name="title" value={{row[1]}} />-->
-<!--                    <input type="hidden" name="content" value={{row[3]}} />-->
-<!--                    <input type="hidden" name="modified" value={{row[4]}} />-->
-<!--                    <button type="submit" name="id" value={{row[0]}}>Update</button>-->
-<!--                </form>-->
-<!--                </td>-->
-<!--                <td><form action="./delete" method='post'>-->
-<!--                    <button type="submit" name="delete" value={{row[0]}}>Delete</button>-->
-<!--                </form>-->
-<!--                    <td><form action="./details" method='post'>-->
-<!--                    <button type="submit" name="details" value={{row[0]}}>Details</button>-->
-<!--                </form>-->
-<!--                </td>-->
+                <td style="word-break: break-all">{{row[2]}}</td>
+                <td style="word-break: break-all">{{row[3]}}</td>
+                <td style="word-break: break-all">{{row[4]}}</td>
+                <td style="word-break: break-all">{{row[5]}}</td>
+                <td style="word-break: break-all">{{row[7]}}</td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
-</div>
+
 </div>
 </body>
 </html>
