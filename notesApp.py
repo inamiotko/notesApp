@@ -89,9 +89,8 @@ def update():
             content_up = cur.fetchall()
             content = content_up.pop()
             content = content[0]
-
         except sql.Error as error:
-            print("Failed to update table ", error)
+            print("Failed to fetch table ", error)
     return render_template('update.html', id=id_up, title=title_up, content=content)
 
 
