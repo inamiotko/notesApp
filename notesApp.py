@@ -5,6 +5,8 @@ app = Flask(__name__)
 DATABASE = 'database.db'
 occurrences = []
 
+
+# database initialisation
 def init_db():
     with app.app_context():
         db = get_db()
@@ -12,6 +14,8 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
+
+# function that connects to db
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -19,6 +23,7 @@ def get_db():
     return db
 
 
+# closing connection
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -26,18 +31,19 @@ def close_connection(exception):
         db.close()
 
 
+# welcome page with add note form
 @app.route('/')
 def home():
     init_db()
     return render_template('index.html')
 
 
+# adding records to db
 @app.route('/addtodb', methods=['POST'])
 def addtodb():
     if request.method == 'POST':
         try:
             db = get_db()
-            # conn = sql.connect('database.db')
             title = request.form['title']
             content = request.form['content']
             created = request.form['added']
@@ -57,6 +63,7 @@ def addtodb():
         conn.close()
 
 
+# displaying all results from notes table
 @app.route('/results')
 def results():
     try:
@@ -69,6 +76,7 @@ def results():
     return render_template('results.html', data=data)
 
 
+# getting data from table to update it
 @app.route('/update', methods=['POST'])
 def update():
     if request.method == 'POST':
@@ -87,6 +95,7 @@ def update():
     return render_template('update.html', id=id_up, title=title_up, content=content)
 
 
+# updating table with data inserted in form
 @app.route('/edit', methods=['POST'])
 def edit():
     if request.method == 'POST':
@@ -101,7 +110,7 @@ def edit():
             occurrences.append(id_up)
             ver = occurrences.count(id_up)
             db.execute("INSERT INTO items (note_id, edited, deleted,title,content, added, modified) SELECT note_id, "
-                         "? ,deleted,?,?, added, ? FROM items WHERE note_id=?", (ver, title, content, modified, id_up))
+                       "? ,deleted,?,?, added, ? FROM items WHERE note_id=?", (ver, title, content, modified, id_up))
             db.execute("UPDATE notes SET title=? WHERE id=? ", (title, id_up))
             db.commit()
             print("note changed")
@@ -111,6 +120,7 @@ def edit():
     return render_template('added.html')
 
 
+# deleting chosen records
 @app.route('/delete', methods=['POST'])
 def delete():
     if request.method == 'POST':
@@ -127,6 +137,7 @@ def delete():
     return render_template('delete.html', data=data_aft)
 
 
+# displaying details about each note
 @app.route('/details', methods=['POST'])
 def details():
     if request.method == 'POST':
@@ -143,6 +154,7 @@ def details():
     return render_template('details.html', data=data_aft)
 
 
+# displaying content and title of each note when title pressed
 @app.route('/readonly', methods=['POST'])
 def readonly():
     if request.method == 'POST':
