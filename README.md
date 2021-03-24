@@ -6,10 +6,10 @@
 * [Technologies used](#technologies-used)
 * [Setup](#setup)
  
-## General info
+## General informations
 notesApp is a CRUD application that allows you to add, update, delete and preview your notes, it allows you to manage your notes flexibly. It saves the version of your note and allows you to check if note has been deleted - prewiev of notes history. 
 
-## Technologies
+## Technologies used
 Used libraries and technologies:
 - Python 3.8, 
 - Flask 1.1.2, 
