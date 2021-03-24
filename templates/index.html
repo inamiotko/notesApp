@@ -29,7 +29,9 @@
               let year = date.getFullYear();
               let month = date.getMonth()+1;
               let day = date.getDate();
-              let fullDate = day + "." + month + "." + year;
+              let hour = date.getHours();
+              let minute = date.getMinutes();
+              let fullDate = hour+":"+ minute+"; "+day + "." + month + "." + year;
               document.getElementById("added").value = fullDate
           </script>
             </div>
