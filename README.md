@@ -2,8 +2,8 @@
 # CRUD application responsible for managing notes.
 
 ## Table of contents
-* [General info](#general-info)
-* [Technologies](#technologies)
+* [General informations](#general-informations)
+* [Technologies used](#technologies-used)
 * [Setup](#setup)
  
 ## General info
