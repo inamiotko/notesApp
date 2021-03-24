@@ -1,3 +1,5 @@
+from os import abort
+
 from flask import Flask, render_template, request, g
 import sqlite3 as sql
 
@@ -47,19 +49,22 @@ def addtodb():
             title = request.form['title']
             content = request.form['content']
             created = request.form['added']
-            db.execute("INSERT INTO notes (title, added) VALUES(?, ?)", (title, created))
+            if any(not c.isalnum() for c in title or content):
+                message = "Error 400 - invalid input type"
+            else:
+                db.execute("INSERT INTO notes (title, added) VALUES(?, ?)", (title, created))
 
-            db.execute(
-                "INSERT INTO items (deleted, edited, title,content, added, modified, note_id) SELECT ?,?,?,?,?,?, "
-                "id FROM notes WHERE id=id AND NOT EXISTS (SELECT 1 FROM items WHERE (items.title = notes.title AND "
-                "items.note_id=notes.id))", (0, 0, title, content, created, created))
-            db.commit()
-            print("Note added")
+                db.execute(
+                    "INSERT INTO items (deleted, edited, title,content, added, modified, note_id) SELECT ?,?,?,?,?,?, "
+                    "id FROM notes WHERE id=id AND NOT EXISTS (SELECT 1 FROM items WHERE (items.title = notes.title AND "
+                    "items.note_id=notes.id))", (0, 0, title, content, created, created))
+                db.commit()
+                message = "Note successfully added to database"
 
         except sql.Error as error:
             print("Failed to add record ", error)
 
-        return render_template("added.html")
+        return render_template("added.html", message=message)
         conn.close()
 
 
@@ -108,15 +113,17 @@ def edit():
             cur = db.cursor()
             occurrences.append(id_up)
             ver = occurrences.count(id_up)
-            db.execute("INSERT INTO items (note_id, edited, deleted,title,content, added, modified) SELECT note_id, "
-                       "? ,deleted,?,?, added, ? FROM items WHERE note_id=?", (ver, title, content, modified, id_up))
-            db.execute("UPDATE notes SET title=? WHERE id=? ", (title, id_up))
-            db.commit()
-            print("note changed")
-            cur.close()
+            if any(not c.isalnum() for c in title or content):
+                message = "Error 400 - invalid input type"
+            else:
+                db.execute("INSERT INTO items (note_id, edited, deleted,title,content, added, modified) SELECT note_id, "
+                           "? ,deleted,?,?, added, ? FROM items WHERE note_id=?", (ver, title, content, modified, id_up))
+                db.execute("UPDATE notes SET title=? WHERE id=? ", (title, id_up))
+                db.commit()
+                message = "Note successfully added to database"
         except sql.Error as error:
             print("Failed to edit table ", error)
-    return render_template('added.html')
+    return render_template('added.html', message=message)
 
 
 # deleting chosen records
@@ -130,10 +137,10 @@ def delete():
             cur.execute("DELETE FROM notes WHERE id=?", (id_del,))
             cur.execute("UPDATE items SET deleted =? WHERE note_id=? ", (1, id_del))
             db.commit()
-            data_aft = cur.fetchall()
+            message = "Note has been successfully deleted"
         except sql.Error as error:
             print("Failed to delete record ", error)
-    return render_template('delete.html', data=data_aft)
+    return render_template('added.html', message=message)
 
 
 # displaying details about each note
@@ -144,7 +151,6 @@ def details():
             db = get_db()
             cur = db.cursor()
             id_show = request.form['details']
-            print(id_show)
             cur.execute("SELECT * FROM items WHERE note_id=? ORDER BY edited ASC", (id_show,))
             db.commit()
             data_aft = cur.fetchall()
