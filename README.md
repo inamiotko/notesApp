@@ -21,7 +21,8 @@ To build and run project you need to run "notesApp" in python interpreter of you
 if those exist already new ones won't be created.
 
 To run project locally use following instructions:
-$ cd ../path to location of notesApp folder
+```
+$ cd ../path to location of notesApp folder 
 $ python3 notesApp
 
-
+```
